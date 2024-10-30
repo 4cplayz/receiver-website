@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 // Temporary storage for the latest receipt data
-let latestReceiptData = null;
+let latestReceiptData : any = null;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'OPTIONS') {

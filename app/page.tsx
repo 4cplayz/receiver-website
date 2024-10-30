@@ -9,6 +9,7 @@ interface ReceiptItem {
   price: number;
   count: number;
 }
+
 interface ReceiptData {
   nfcCardID: string;
   items?: ReceiptItem[];
