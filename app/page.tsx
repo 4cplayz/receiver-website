@@ -114,12 +114,12 @@ const Page = () => {
 
             <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', marginBottom: '0.5rem' }}>
               <span>Total</span>
-              <span style={{ fontSize: '1.1rem', color: '#000' }}>${(total * 1.15).toFixed(2)}</span>
+              <span style={{ fontSize: '1.1rem', color: '#000' }}>${((total ?? 0) * 1.15).toFixed(2)}</span>
             </div>
 
             <div style={{ fontSize: '0.9rem', color: '#666', marginTop: '1rem' }}>
-              <p>Sous-Total : ${total.toFixed(2)}</p>
-              <p>Taxes : ${(total * 0.15).toFixed(2)}</p>
+              <p>Sous-Total : ${(total ?? 0).toFixed(2)}</p>
+              <p>Taxes : ${((total ?? 0) * 0.15).toFixed(2)}</p>
             </div>
 
             <p style={{ textAlign: 'center', margin: '1rem 0' }}>{'*'.repeat(Math.min(asteriskCount, 36))}</p>
