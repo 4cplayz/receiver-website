@@ -1,42 +1,62 @@
-// receiver-website/pages/index.tsx
-"use client"
-import React, { useState, useEffect } from 'react';
-import { getReceiptData } from '../app/receiveReceipt';
+'use client';
+import React, { useState } from 'react';
+interface ReceiptItem {
+  id: number;
+  name: string;
+  price: number;
+  count: number;
+}
+interface ReceiptData {
+  nfcCardID: string;
+  items?: ReceiptItem[];
+  total: number;
+  shopName: string;
+  paiement: string;
+}
 
-const Home = () => {
-  const [receipt, setReceipt] = useState<any>(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const data = getReceiptData();
-      setReceipt(data); // Update displayed data when new data arrives
-    }, 1000); // Poll every second
 
-    return () => clearInterval(interval); // Clean up on unmount
-  }, []);
+const Page = () => {
+  const [receiptData, setReceiptData] = useState<ReceiptData | null>(null);
 
+  const fetchReceiptData = async () => {
+    try {
+      const response = await fetch('/api/receiveReceipt', { method: 'GET' });
+      const data = await response.json();
+      if (data.data) {
+        setReceiptData(data.data as ReceiptData);
+        console.log(receiptData);
+      }
+    } catch (error) {
+      console.error('Error fetching receipt data:', error);
+    }
+  };
   return (
     <div>
-      <h1>Receipt Display</h1>
-      {receipt ? (
-        <div>
-          <h2>Shop Name: {receipt.shopName}</h2>
-          <h3>Payment Mode: {receipt.paiement}</h3>
-          <h4>Client ID: {receipt.nfcCardID}</h4>
-          <ul>
-            {receipt.items.map((item: any) => (
-              <li key={item.id}>
-                {item.name} - Quantity: {item.count} - Price: ${item.price * item.count}
-              </li>
-            ))}
-          </ul>
-          <h3>Total: ${receipt.total}</h3>
-        </div>
-      ) : (
-        <p>No receipt data received yet</p>
-      )}
+      <button
+        onClick={fetchReceiptData}
+        style={{
+          marginTop: '1rem',
+          padding: '0.75rem 1.5rem',
+          backgroundColor: '#3da9ae',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '1rem',
+          cursor: 'pointer',
+        }}
+      >
+        Voir votre reçu
+      </button>
+
+      {receiptData ? (
+  <div style={{ marginTop: '1.5rem' }}>
+    <h2>Receipt Details</h2>
+    <p>{receiptData.total}</p>
+  </div>
+) : (
+  <p style={{ marginTop: '1rem' }}>No receipt data available</p>
+)}
     </div>
   );
 };
-
-export default Home;
+export default Page;
