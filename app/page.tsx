@@ -2,6 +2,7 @@
 import PlacementContainer from '@/components/container/PlacementContainer';
 import TextContainer from '../components/container/TextContainer';
 import React, { useState, useEffect } from 'react';
+import Footer from '@/components/sections/Footer';
 
 interface ReceiptItem {
   id: number;
@@ -128,6 +129,7 @@ const Page = () => {
         ) : (
           <p style={{ marginTop: '1rem', color: '#999' }}>Aucune donnée de reçu disponible</p>
         )}
+        <Footer />
       </PlacementContainer>
     </div>
   );
